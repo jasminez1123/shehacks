@@ -1,22 +1,36 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [selectedParts, setSelectedParts] = useState([]);
+
+  const bodyParts = ['Torso', 'Face', 'Legs', 'Arms', 'Feet'];
+
+  const handleSelection = (part) => {
+    setSelectedParts((prevSelectedParts) =>
+      prevSelectedParts.includes(part)
+        ? prevSelectedParts.filter((p) => p !== part)
+        : [...prevSelectedParts, part]
+    );
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>Select the body parts you want to feature in the photo:</p>
+        <div className="body-parts">
+          {bodyParts.map((part) => (
+            <label key={part} className="body-part-label">
+              <input
+                type="checkbox"
+                checked={selectedParts.includes(part)}
+                onChange={() => handleSelection(part)}
+              />
+              {part}
+            </label>
+          ))}
+        </div>
+        <button className="next-button">Next</button>
       </header>
     </div>
   );
